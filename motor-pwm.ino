@@ -1,6 +1,5 @@
 #define MAX_VALUE_PWM 255
 #define TIME_PER_VALUE 300
-#define COMPLETE_ROTATION 10
 
 const unsigned int pinPwm = 3;
 
