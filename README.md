@@ -1,1 +1,1 @@
-motor-pwm
+PWM (Pulse Width Modulation) ou Modulação de Largura de Pulso, utilizado em sistemas digitais, consiste em uma técnica para variar o valor médio de uma forma de onda periódica. Assim, é possível controlar em uma onda quadrada o tempo em que ela fica em nível lógico alto, mantendo sua frequência, mas alterando o seu valor médio de tensão ao longo do tempo.
