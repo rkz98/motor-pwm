@@ -7,6 +7,8 @@
 #define PIN_ENABLE 7
 #define PIN_ST_CP 12
 
+#define ANALOG_PIN A0
+
 #define BIT_MOTOR_1_A 2
 #define BIT_MOTOR_1_B 3
 #define BIT_MOTOR_2_A 1
@@ -34,30 +36,17 @@ void setup() {
 
 	digitalWrite(PIN_ENABLE, LOW);
 
-	setMotorStatusByPin(BIT_MOTOR_1_A, HIGH);
 	setMotorStatusByPin(BIT_MOTOR_1_B, LOW);
+	setMotorStatusByPin(BIT_MOTOR_1_A, HIGH);
 
-	setMotorStatusByPin(BIT_MOTOR_2_A, HIGH);
 	setMotorStatusByPin(BIT_MOTOR_2_B, LOW);
+	setMotorStatusByPin(BIT_MOTOR_2_A, HIGH);
 
-	setMotorStatusByPin(BIT_MOTOR_3_A, HIGH);
 	setMotorStatusByPin(BIT_MOTOR_3_B, LOW);
+	setMotorStatusByPin(BIT_MOTOR_3_A, HIGH);
 
-	setMotorStatusByPin(BIT_MOTOR_4_A, HIGH);
 	setMotorStatusByPin(BIT_MOTOR_4_B, LOW);
-}
-
-void delayPWM(unsigned long maxTime) {
-	byte valueA0;
-	unsigned long start = millis();
-
-	while ((millis() - start) < maxTime) {
-		valueA0 = map(analogRead(A0), 0, 1023, 0, 255);
-		analogWrite(PIN_MOTOR_1_PWM, valueA0);
-		analogWrite(PIN_MOTOR_2_PWM, valueA0);
-		analogWrite(PIN_MOTOR_3_PWM, valueA0);
-		analogWrite(PIN_MOTOR_4_PWM, valueA0);
-	}
+	setMotorStatusByPin(BIT_MOTOR_4_A, HIGH);
 }
 
 void setMotorStatusByPin(byte pin, bool status) {
@@ -79,6 +68,19 @@ void setMotorStatusByPin(byte pin, bool status) {
 	}
 
 	digitalWrite(PIN_ST_CP, HIGH);
+}
+
+void delayPWM(unsigned long maxTime) {
+	byte valueA0;
+	unsigned long start = millis();
+
+	while ((millis() - start) < maxTime) {
+		valueA0 = map(analogRead(ANALOG_PIN), 0, 1023, 0, 255);
+		analogWrite(PIN_MOTOR_1_PWM, valueA0);
+		analogWrite(PIN_MOTOR_2_PWM, valueA0);
+		analogWrite(PIN_MOTOR_3_PWM, valueA0);
+		analogWrite(PIN_MOTOR_4_PWM, valueA0);
+	}
 }
 
 void loop() {
