@@ -72,9 +72,11 @@ void setMotorStatusByPin(byte pin, bool status) {
     digitalWrite(PIN_ST_CP, HIGH);
 }
 
-void delayPWM(unsigned long maxRotations) {
+void delayPWM(unsigned long maxTime) {
     byte valueA0;
-    for (unsigned long index = 0; index < maxRotations; index++) {
+    unsigned long start = millis();
+
+    while ((millis() - start) < maxTime) {
         valueA0 = map(analogRead(ANALOG_PIN), 0, 1023, 0, 255);
         analogWrite(PIN_MOTOR_1_PWM, valueA0);
         analogWrite(PIN_MOTOR_2_PWM, valueA0);
@@ -84,5 +86,5 @@ void delayPWM(unsigned long maxRotations) {
 }
 
 void loop() {
-//    delayPWM(2000);
+//	delayPWM(2000);
 }
