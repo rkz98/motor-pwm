@@ -70,8 +70,8 @@ void setMotorStatusByPin(byte pin, bool status) {
     digitalWrite(PIN_SH_CP, LOW);
     digitalWrite(PIN_ST_CP, LOW);
 
-    for (int nC = QUANTITY_OF_CI - 1; nC >= 0; nC--) {
-        for (int nB = 7; nB >= 0; nB--) {
+    for (unsigned int nC = QUANTITY_OF_CI - 1; nC >= 0; nC--) {
+        for (unsigned int nB = 7; nB >= 0; nB--) {
             digitalWrite(PIN_SH_CP, LOW);
             digitalWrite(PIN_DS, bitRead(ciBuffer[nC], nB));
             digitalWrite(PIN_SH_CP, HIGH);
