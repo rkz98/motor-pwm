@@ -47,8 +47,6 @@ void setup() {
 
     setMotorStatusByPin(BIT_MOTOR_4_B, LOW);
     setMotorStatusByPin(BIT_MOTOR_4_A, HIGH);
-
-    delayPWM(2000);
 }
 
 void setMotorStatusByPin(byte pin, bool status) {
@@ -86,5 +84,5 @@ void delayPWM(unsigned long maxTime) {
 }
 
 void loop() {
-//	delayPWM(2000);
+    delayPWM(2000);
 }
