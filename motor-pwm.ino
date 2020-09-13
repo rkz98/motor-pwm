@@ -23,7 +23,12 @@
 #define PIN_MOTOR_4_PWM 6
 #define PIN_MOTOR_1_PWM 11
 
+unsigned long setRotations = 0;
+unsigned long actualRotations = 0;
+
 void setup() {
+    Serial.begin(9600);
+
     pinMode(PIN_DS, OUTPUT);
     pinMode(PIN_SH_CP, OUTPUT);
     pinMode(PIN_ST_CP, OUTPUT);
@@ -36,6 +41,8 @@ void setup() {
 
     digitalWrite(PIN_ENABLE, LOW);
 
+    setSerialMaxRotations();
+
     setMotorStatusByPin(BIT_MOTOR_1_B, LOW);
     setMotorStatusByPin(BIT_MOTOR_1_A, HIGH);
 
@@ -47,6 +54,11 @@ void setup() {
 
     setMotorStatusByPin(BIT_MOTOR_4_B, LOW);
     setMotorStatusByPin(BIT_MOTOR_4_A, HIGH);
+}
+
+void setSerialMaxRotations() {
+    while (!Serial.available()) {}
+    serialMaxRotations = Serial.read();
 }
 
 void setMotorStatusByPin(byte pin, bool status) {
@@ -70,10 +82,12 @@ void setMotorStatusByPin(byte pin, bool status) {
     digitalWrite(PIN_ST_CP, HIGH);
 }
 
+//byte valueA0;
+//valueA0 = map(index, 0, 1023, 0, 255);
+
 void delayPWM(unsigned long maxRotations) {
-    byte valueA0;
     for (unsigned long index = 0; index < maxRotations; index++) {
-        // valueA0 = map(index, 0, 1023, 0, 255);
+        actualRotations = index;
         analogWrite(PIN_MOTOR_1_PWM, index);
         analogWrite(PIN_MOTOR_2_PWM, index);
         analogWrite(PIN_MOTOR_3_PWM, index);
@@ -83,5 +97,5 @@ void delayPWM(unsigned long maxRotations) {
 }
 
 void loop() {
-  delayPWM(255);
+    delayPWM(serialMaxRotations);
 }
