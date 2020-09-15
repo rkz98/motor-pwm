@@ -7,8 +7,6 @@
 #define PIN_ENABLE 7
 #define PIN_ST_CP 12
 
-#define ANALOG_PIN A0
-
 #define BIT_MOTOR_1_A 2
 #define BIT_MOTOR_1_B 3
 #define BIT_MOTOR_2_A 1
@@ -23,8 +21,7 @@
 #define PIN_MOTOR_4_PWM 6
 #define PIN_MOTOR_1_PWM 11
 
-unsigned long setRotations = 0;
-unsigned long actualRotations = 0;
+unsigned long serialMaxRotations = 0;
 
 void setup() {
     Serial.begin(9600);
@@ -82,17 +79,22 @@ void setMotorStatusByPin(byte pin, bool status) {
     digitalWrite(PIN_ST_CP, HIGH);
 }
 
-//byte valueA0;
-//valueA0 = map(index, 0, 1023, 0, 255);
+void mapValueToAnalogWrite(unsigned long index, unsigned long firstIndex, unsigned long lastIndex) {
+    mappedValue = map(index, firstIndex, lastIndex, 25, 230);
+    analogWrite(PIN_MOTOR_1_PWM, mappedValue);
+    analogWrite(PIN_MOTOR_2_PWM, mappedValue);
+    analogWrite(PIN_MOTOR_3_PWM, mappedValue);
+    analogWrite(PIN_MOTOR_4_PWM, mappedValue);
+    delay(1000);
+}
 
 void delayPWM(unsigned long maxRotations) {
-    for (unsigned long index = 0; index < maxRotations; index++) {
-        actualRotations = index;
-        analogWrite(PIN_MOTOR_1_PWM, index);
-        analogWrite(PIN_MOTOR_2_PWM, index);
-        analogWrite(PIN_MOTOR_3_PWM, index);
-        analogWrite(PIN_MOTOR_4_PWM, index);
-        delay(1000);
+    for (unsigned long index = 0; index <= maxRotations; index++) {
+        mapValueToAnalogWrite(index, 0, maxRotations);
+    }
+
+    for (unsigned long index = maxRotations; index >= 0; index--) {
+        mapValueToAnalogWrite(index, maxRotations, 0);
     }
 }
 
