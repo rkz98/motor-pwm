@@ -80,7 +80,7 @@ void setMotorStatusByPin(byte pin, bool status) {
 }
 
 void mapValueToAnalogWrite(unsigned long index, unsigned long firstIndex, unsigned long lastIndex) {
-    mappedValue = map(index, firstIndex, lastIndex, 25, 230);
+    byte mappedValue = map(index, firstIndex, lastIndex, 25, 230);
     analogWrite(PIN_MOTOR_1_PWM, mappedValue);
     analogWrite(PIN_MOTOR_2_PWM, mappedValue);
     analogWrite(PIN_MOTOR_3_PWM, mappedValue);
